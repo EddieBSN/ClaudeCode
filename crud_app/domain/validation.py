@@ -1,7 +1,7 @@
 """Validation of domain invariants, separated from the entity and the service."""
 
-from .errors import ValidationError
-from .task import Task
+from crud_app.domain.errors import ValidationError
+from crud_app.domain.task import Task
 
 _MAX_TITLE_LENGTH = 200
 

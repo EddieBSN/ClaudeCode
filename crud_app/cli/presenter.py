@@ -2,7 +2,7 @@
 
 from typing import List
 
-from ..domain.task import Task
+from crud_app.domain.task import Task
 
 
 class TaskPresenter:

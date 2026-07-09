@@ -2,9 +2,9 @@
 
 from typing import List, Optional
 
-from ..domain.task import Task
-from ..domain.validation import TaskValidator
-from ..ports.repository import TaskRepository
+from crud_app.domain.task import Task
+from crud_app.domain.validation import TaskValidator
+from crud_app.ports.repository import TaskRepository
 
 
 class TaskService:
@@ -14,8 +14,7 @@ class TaskService:
         self._repository = repository
         self._validator = validator
 
-    def create(self, title: str, description: str = "") -> Task:
-        task = Task(id=None, title=title, description=description)
+    def create(self, task: Task) -> Task:
         self._validator.validate(task)
         return self._repository.add(task)
 

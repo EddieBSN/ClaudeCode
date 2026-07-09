@@ -11,7 +11,7 @@ Any implementation must honour the same behaviour (Liskov substitution):
 from abc import ABC, abstractmethod
 from typing import List
 
-from ..domain.task import Task
+from crud_app.domain.task import Task
 
 
 class TaskRepository(ABC):

@@ -1,7 +1,7 @@
 # Task CRUD Application
 
 A small command-line task manager built to demonstrate clean, SOLID-compliant
-structure with **zero external dependencies** (Python 3.8+ standard library only).
+structure with **zero external dependencies** (Python 3.9+ standard library only).
 
 ## Usage
 
@@ -9,7 +9,7 @@ structure with **zero external dependencies** (Python 3.8+ standard library only
 python -m crud_app.cli.main create "Buy milk" -d "2 liters"
 python -m crud_app.cli.main list
 python -m crud_app.cli.main show 1
-python -m crud_app.cli.main update 1 --done
+python -m crud_app.cli.main update 1 --done      # or --no-done to reopen
 python -m crud_app.cli.main update 1 -t "Buy oat milk"
 python -m crud_app.cli.main delete 1
 ```
@@ -35,13 +35,15 @@ cli  ─►  services  ─►  ports  ◄─  adapters
 | Layer      | Module                          | Responsibility                          | Collaborators |
 |------------|---------------------------------|-----------------------------------------|---------------|
 | domain     | `Task`                          | Immutable entity                        | 0             |
+| domain     | `TaskFactory`                   | Constructs new, unsaved tasks           | 1             |
 | domain     | `TaskValidator`                 | Domain invariants                       | 1             |
 | ports      | `TaskRepository` (ABC)          | Storage contract                        | 1             |
 | adapters   | `InMemoryTaskRepository`        | Dict-backed storage (tests)             | 2             |
 | adapters   | `SqliteTaskRepository`          | SQLite persistence                      | 3             |
 | services   | `TaskService`                   | CRUD use cases                          | 3             |
 | cli        | `TaskPresenter`                 | Output formatting                       | 1             |
-| cli        | `TaskCommands`                  | Subcommand handlers                     | 2             |
+| cli        | `TaskCommands`                  | Subcommand handlers                     | 3             |
+| cli        | `parser` / `registry`           | Declarative subcommand table            | —             |
 | cli        | `main`                          | Composition root (wiring only)          | —             |
 
 ### How SOLID is applied
@@ -57,6 +59,7 @@ cli  ─►  services  ─►  ports  ◄─  adapters
 - **D**ependency inversion — `TaskService` depends on the abstract port;
   concrete adapters are chosen only in the composition root (`cli/main.py`).
 
-Cyclomatic complexity stays low throughout: command dispatch uses argparse
-`set_defaults(handler=...)` instead of if/elif chains, and partial updates use
-`Task.with_changes` instead of per-field branching.
+Cyclomatic complexity stays low throughout: subcommands are declared as data
+in `cli/registry.py` and consumed by a generic builder in `cli/parser.py` —
+no if/elif dispatch chains and no imperative argparse call spam — and partial
+updates use `Task.with_changes` instead of per-field branching.

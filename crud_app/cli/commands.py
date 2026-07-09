@@ -2,19 +2,28 @@
 
 import argparse
 
-from ..services.task_service import TaskService
-from .presenter import TaskPresenter
+from crud_app.cli.presenter import TaskPresenter
+from crud_app.domain.factory import TaskFactory
+from crud_app.services.task_service import TaskService
 
 
 class TaskCommands:
     """One handler method per subcommand; each returns the text to print."""
 
-    def __init__(self, service: TaskService, presenter: TaskPresenter) -> None:
+    def __init__(
+        self,
+        service: TaskService,
+        presenter: TaskPresenter,
+        factory: TaskFactory,
+    ) -> None:
         self._service = service
         self._presenter = presenter
+        self._factory = factory
 
     def create(self, args: argparse.Namespace) -> str:
-        task = self._service.create(args.title, args.description)
+        task = self._service.create(
+            self._factory.new_task(args.title, args.description)
+        )
         return f"Created: {self._presenter.render_task(task)}"
 
     def show(self, args: argparse.Namespace) -> str:

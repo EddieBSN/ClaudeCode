@@ -3,9 +3,9 @@
 import sqlite3
 from typing import List
 
-from ..domain.errors import TaskNotFoundError
-from ..domain.task import Task
-from ..ports.repository import TaskRepository
+from crud_app.domain.errors import TaskNotFoundError
+from crud_app.domain.task import Task
+from crud_app.ports.repository import TaskRepository
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS tasks (

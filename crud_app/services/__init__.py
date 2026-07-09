@@ -1,3 +1,3 @@
-from .task_service import TaskService
+from crud_app.services.task_service import TaskService
 
 __all__ = ["TaskService"]
