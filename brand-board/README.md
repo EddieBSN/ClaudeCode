@@ -1,23 +1,43 @@
-# Sonder Brand Board
+# Brand Boards
 
-A six tile brand identity board for Sonder, an invented creative studio,
-generated purely in code. No stock assets, no AI images, no external
-resources except Google Fonts (embedded as woff2 data URIs, so the page
-renders fully offline).
+Six tile brand identity boards for invented creative studios, generated
+purely in code. No stock assets, no AI images, no external resources
+except Google Fonts (embedded as woff2 data URIs, so each page renders
+fully offline). All boards share one visual language (airbrushed grainy
+gradients, Instrument Serif plus tracked Inter micro labels, thin
+geometry) but no board repeats another board's elements.
 
-![Board preview](preview.png)
+## Board 1: Sonder (`index.html`)
+
+Horizontal hero lockup, overlapping circles values diagram with sparkles
+and registration squares, four card cluster, inset thirds grid banner,
+2x2 business cards with stipple fill backs, halo ring closer.
+
+![Sonder board](preview.png)
+
+## Board 2: Cadence (`cadence.html`)
+
+Stacked hero lockup, concentric rings values diagram with plus glyphs,
+type and color specimen, full bleed typographic banner with hairline
+frame, letterhead and envelope stationery, glowing sun orb closer.
+Logomark is a six petal hexafoil around a circle core, rendered as
+duotone, echo (nested outlines), and bold outline variants.
+
+![Cadence board](cadence-preview.png)
 
 ## Files
 
-- `index.html` self contained board, renders at 2400 x 2076 px
+- `index.html`, `cadence.html` self contained boards, 2400 x 2076 px
 - `export.cjs` headless export script (Playwright plus system Chromium)
-- `brand-board.png` final export, 4800 px wide
+- `brand-board.png`, `cadence.png` final exports, 4800 px wide
 
 ## Rendering
 
 ```bash
-node export.cjs            # writes brand-board.png at 4800 x 4152
-node export.cjs --preview  # writes preview.png at 1200 px wide
+node export.cjs                        # Sonder, brand-board.png at 4800 px
+node export.cjs --preview              # Sonder, preview.png at 1200 px
+node export.cjs cadence.html           # Cadence, cadence.png at 4800 px
+node export.cjs cadence.html --preview # Cadence, cadence-preview.png
 ```
 
 The script waits for `window.__ready`, which the page sets once fonts are

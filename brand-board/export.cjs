@@ -1,5 +1,7 @@
-/* Renders index.html headless and saves brand-board.png at 4800 px wide.
-   Usage: node export.cjs [--preview]  (preview writes a 1200 px preview.png) */
+/* Renders a board page headless and saves a PNG at 4800 px wide.
+   Usage: node export.cjs [page.html] [--preview]
+   Default page is index.html, exported as brand-board.png.
+   Other pages export as <name>.png. --preview writes a 1200 px preview. */
 
 const path = require("path");
 
@@ -11,8 +13,13 @@ function loadPlaywright() {
   }
 }
 
-const preview = process.argv.includes("--preview");
-const outfile = preview ? "preview.png" : "brand-board.png";
+const args = process.argv.slice(2);
+const preview = args.includes("--preview");
+const page_file = args.find((a) => a.endsWith(".html")) || "index.html";
+const base = path.basename(page_file, ".html");
+const fullname = base === "index" ? "brand-board.png" : base + ".png";
+const previewname = base === "index" ? "preview.png" : base + "-preview.png";
+const outfile = preview ? previewname : fullname;
 const scale = preview ? 0.5 : 2;
 
 (async () => {
@@ -22,7 +29,7 @@ const scale = preview ? 0.5 : 2;
     viewport: { width: 2400, height: 2076 },
     deviceScaleFactor: scale,
   });
-  await page.goto("file://" + path.join(__dirname, "index.html"));
+  await page.goto("file://" + path.join(__dirname, page_file));
   await page.waitForFunction("window.__ready === true", null, { timeout: 30000 });
   await page.screenshot({ path: path.join(__dirname, outfile) });
   await browser.close();
