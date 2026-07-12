@@ -15,7 +15,7 @@ function loadPlaywright() {
 }
 
 const preview = process.argv.includes("--preview");
-const brands = ["kestrel", "halcyon", "voltra", "vesper"];
+const brands = ["kestrel", "halcyon", "voltra", "vesper", "flowtick"];
 
 (async () => {
   const { chromium } = loadPlaywright();

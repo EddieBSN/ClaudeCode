@@ -1,10 +1,11 @@
 # Brand reveal frames
 
-Four invented brands, each shown as a reveal frame: a pure white lockup
-centered on a full-bleed generative background, in the style of a set of
-reference frames. Everything is drawn in code: SVG marks, canvas-painted
-backgrounds, Google Fonts wordmarks (embedded as woff2 data URIs, so the
-page renders fully offline). No stock images, no AI image generation.
+Five reveal frames: four invented brands plus the real flowtick identity,
+each a pure white lockup centered on a full-bleed generative background,
+in the style of a set of reference frames. Everything is drawn in code:
+SVG marks, canvas-painted backgrounds, Google Fonts wordmarks (embedded
+as woff2 data URIs, so the page renders fully offline). No stock images,
+no AI image generation.
 
 ## The brands
 
