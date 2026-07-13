@@ -20,17 +20,20 @@ sprout beside the wordmark.
 
 ## The image
 
-The right half is a single composed SVG scene (viewBox 880x1000) with real back-to-front
-depth: a graduated dawn sky and soft top-left light; a cropped classical building
-fragment; a canopy of desaturated fronds hanging from the top edge (atmospheric
-perspective); midground foliage with per-leaf gradient modelling and veins, mixing
-almond and tropical split-leaf shapes; a figure absorbed in their phone with a warm
-screen-glow lighting the hands and chin; coral poppies; and oversized, darker,
-higher-contrast foreground leaves. An feTurbulence film grain sits over everything.
+The right half carries the identity: a flat-vector editorial illustration of a person
+absorbed in their phone among oversized foliage, a cropped classical building fragment,
+coral poppies and a dawn sky, with real back-to-front depth and a cool phone-screen glow
+on the hands and chin. It is generated externally (GPT Image 2) to prompts authored in
+`asset-prompts.md` using the palette sampled from this page, then dropped in full bleed
+(`object-fit: cover`, centered). A hand-built SVG version of the same scene remains in the
+markup as a fallback if the raster fails to load, and the feTurbulence film grain stays in
+code, layered on top of the image so it matches the rest of the page.
 
 ## Files
 
-- `screen-1-waitlist.html` — self-contained 1600x1000 frame (fonts embedded)
+- `screen-1-waitlist.html` — 1600x1000 frame (fonts embedded; references `art/`)
+- `art/hero-illustration.png` — generated hero illustration (1254x1254)
+- `asset-prompts.md` — GPT Image 2 generation prompts + sampled palette
 - `export.cjs` — headless render via Playwright + system Chromium
 - `screen-1-waitlist.png` — 3200x2000 export
 

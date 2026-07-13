@@ -49,9 +49,12 @@ button{height:52px;padding:0 24px;font:inherit;font-weight:500;font-size:14.5px;
 .trust b{color:#3f3f36;font-weight:600}
 
 /* ---- right illustration ---- */
-.right{position:relative;width:880px;height:100%}
-.right svg.illo{position:absolute;inset:0;width:100%;height:100%;display:block}
-.seam{position:absolute;top:0;left:0;width:1px;height:100%;background:rgba(0,0,0,.05)}
+.right{position:relative;width:880px;height:100%;overflow:hidden}
+.right .illo{position:absolute;inset:0;width:100%;height:100%;display:block}
+.right .art{position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;object-position:center}
+.right .grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.seam{position:absolute;top:0;left:0;width:1px;height:100%;background:rgba(0,0,0,.05);z-index:2}
 </style>
 
 <div class="frame" id="frame">
@@ -223,6 +226,12 @@ button{height:52px;padding:0 24px;font:inherit;font-weight:500;font-size:14.5px;
       <g id="flowers"></g>
       <g id="fgleaves"></g>
 
+    </svg>
+    <!-- generated art (full bleed); SVG above is the fallback if it fails to load -->
+    <img class="art" id="art" src="art/hero-illustration.png" alt=""
+         onerror="this.style.display='none'">
+    <!-- grain kept in code, layered on top of the image -->
+    <svg class="grain" viewBox="0 0 880 1000" preserveAspectRatio="none" aria-hidden="true">
       <rect width="880" height="1000" filter="url(#grain)" opacity=".05"
             style="mix-blend-mode:overlay"/>
       <rect width="880" height="1000" filter="url(#grain)" opacity=".035"
@@ -366,5 +375,10 @@ splitLeaf(fg,{x:800,y:1035,rot:30,len:430,wid:185,fill:"url(#lfFg)",vein:"#0d241
 flower(fg,{x:150,y:900,r:44,grad:"url(#petalFg)",dark:"#6a1f10",rot:-6});
 flower(fg,{x:760,y:940,r:38,grad:"url(#petalFg)",dark:"#6a1f10",rot:14});
 
-document.fonts.ready.then(()=>{requestAnimationFrame(()=>{window.__ready=true;});});
+const _art=document.getElementById("art");
+const _imgReady=(_art&&!_art.complete)
+  ?new Promise(r=>{_art.addEventListener("load",r);_art.addEventListener("error",r);})
+  :Promise.resolve();
+Promise.all([document.fonts.ready,_imgReady]).then(()=>{
+  requestAnimationFrame(()=>{window.__ready=true;});});
 </script>
